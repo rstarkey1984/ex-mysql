@@ -6,9 +6,9 @@ var config = {host:'', user:'', password:'', database:''}; // db setting
 var con = ex_mysql(config);
 
 work_process = function(){
-
+	
 	con.connection.query('select sum(1+1)', function(err, rows, field){
-		
+
 		if (err){
 			console.log(err);
 		}else{
