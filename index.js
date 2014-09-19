@@ -1,36 +1,35 @@
 
+var con = {};
 
 function ex_mysql(config){
 
 	try {
 		var mysql = require('mysql');
 
-		var connection = mysql.createConnection(config);
+		con.connection = mysql.createConnection(config);
 
-		connection.connect(function(err) {
+		con.connection.connect(function(err) {
 			if (err) {
 				console.error('error connecting: ' + err.stack);
+				console.log('reconnecting..');
 				setTimeout(function(){
-					console.log('reconnect..');
-					connection = ex_mysql(config);
+					ex_mysql(config);
 				}, 1000);
 				return;
 			}
-			console.log('connected as id ' + connection.threadId);
+			console.log('connected as id ' + con.connection.threadId);
 
-			connection.on('error', function(err) {
+			con.connection.on('error', function(err) {
 				console.log('connection error ' + new Date());
 				console.log(err);
-
+				console.log('reconnecting..');
 				setTimeout(function(){
-					console.log('reconnect..');
-					connection = ex_mysql(config);
+					ex_mysql(config);
 				}, 1000);
-
 			});
 		});
 
-		return connection;
+		return con;
 	}
 	catch (e) {
 		console.log("Notice: 'mysql' module is not available. This should be installed with `npm install mysql`", e);

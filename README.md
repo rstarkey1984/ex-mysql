@@ -10,4 +10,14 @@
 
 	var config = {host:'', user:'', password:'', database:''};
 
-	var connection = mysql(config);
+	var con = ex_mysql(config);
+
+	con.connection.query('select sum(1+1)', function(err, rows, field){
+		
+		if (err){
+			console.log(err);
+		}else{
+			console.log(rows);
+		}
+
+	});
