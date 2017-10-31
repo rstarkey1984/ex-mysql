@@ -1,3 +1,4 @@
+//test
 var mysql = require('mysql');
 var ex_mysql = require('./index.js');
 
